@@ -10,6 +10,13 @@ def mape(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
 def evaluate_models():
+    # Lista para capturar los resultados de la consola
+    output_lines = []
+    
+    def log_print(message):
+        print(message)
+        output_lines.append(message)
+
     # Cargar datos limpios
     df = pd.read_csv('data_cleaned.csv')
     
@@ -35,9 +42,9 @@ def evaluate_models():
     # Obtener los próximos 7 periodos como conjunto de prueba
     test = ts.loc[train.index[-1]:].iloc[1:8]  # Tomar los 7 que siguen al final del train
     
-    print(f"Tamano del set de entrenamiento: {len(train)} trimestres (hasta {train.index[-1].year}-Q{train.index[-1].quarter})")
-    print(f"Tamano del set de prueba: {len(test)} trimestres (desde {test.index[0].year}-Q{test.index[0].quarter} hasta {test.index[-1].year}-Q{test.index[-1].quarter})")
-    print("-" * 50)
+    log_print(f"Tamano del set de entrenamiento: {len(train)} trimestres (hasta {train.index[-1].year}-Q{train.index[-1].quarter})")
+    log_print(f"Tamano del set de prueba: {len(test)} trimestres (desde {test.index[0].year}-Q{test.index[0].quarter} hasta {test.index[-1].year}-Q{test.index[-1].quarter})")
+    log_print("-" * 50)
     
     # 1. Configuración Completamente Aditiva
     modelo_aditivo = ExponentialSmoothing(train, trend='add', seasonal='add', seasonal_periods=4).fit()
@@ -49,14 +56,19 @@ def evaluate_models():
     pred_multiplicativo = modelo_multiplicativo.forecast(7)
     mape_multiplicativo = mape(test, pred_multiplicativo)
     
-    print(f"MAPE Modelo Aditivo (Aditivo - Aditivo):            {mape_aditivo:.3f}%")
-    print(f"MAPE Modelo Multiplicativo (Multiplicativo - Multiplicativo): {mape_multiplicativo:.3f}%")
-    print("-" * 50)
+    log_print(f"MAPE Modelo Aditivo (Aditivo - Aditivo):            {mape_aditivo:.3f}%")
+    log_print(f"MAPE Modelo Multiplicativo (Multiplicativo - Multiplicativo): {mape_multiplicativo:.3f}%")
+    log_print("-" * 50)
     
     if mape_aditivo < mape_multiplicativo:
-        print("=> El modelo con configuracion ADITIVA tuvo el menor MAPE.")
+        log_print("=> El modelo con configuracion ADITIVA tuvo el menor MAPE.")
     else:
-        print("=> El modelo con configuracion MULTIPLICATIVA tuvo el menor MAPE.")
+        log_print("=> El modelo con configuracion MULTIPLICATIVA tuvo el menor MAPE.")
+
+    # Guardar en archivo .txt
+    with open('resultados_entrenamiento.txt', 'w') as f:
+        f.write('\n'.join(output_lines))
+    print(f"\nResultados guardados en 'resultados_entrenamiento.txt'")
 
 if __name__ == "__main__":
     evaluate_models()

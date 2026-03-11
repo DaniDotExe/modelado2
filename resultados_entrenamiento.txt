@@ -1,0 +1,7 @@
+Tamano del set de entrenamiento: 30 trimestres (hasta 2023-Q2)
+Tamano del set de prueba: 7 trimestres (desde 2023-Q3 hasta 2025-Q1)
+--------------------------------------------------
+MAPE Modelo Aditivo (Aditivo - Aditivo):            1.314%
+MAPE Modelo Multiplicativo (Multiplicativo - Multiplicativo): 1.287%
+--------------------------------------------------
+=> El modelo con configuracion MULTIPLICATIVA tuvo el menor MAPE.
