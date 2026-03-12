@@ -23,9 +23,9 @@ def make_prediction():
     ts = df['PIB a precios constantes del 2015']
     
     print("Entrenando modelo Holt-Winters (Multiplicativo) con todos los datos históricos...")
-    # Entrenar el modelo con configuración Multiplicativa (según resultados del train.py)
+    # Entrenar el modelo con configuración Multiplicativa (según resultados del super_train.py)
     modelo = ExponentialSmoothing(ts, trend='mul', seasonal='mul', seasonal_periods=4)
-    modelo_ajustado = modelo.fit()
+    modelo_ajustado = modelo.fit(smoothing_level=0.1, smoothing_trend=0.1, smoothing_seasonal=0.5, optimized=False)
     
     # 3. Predecir los próximos 7 periodos (de 2025-2 a 2026-4)
     pasos = 7

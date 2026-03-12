@@ -1,0 +1,19 @@
+Tamano del set de entrenamiento: 30 trimestres (hasta 2023-Q2)
+Tamano del set de prueba: 7 trimestres (desde 2023-Q3 hasta 2025-Q1)
+--------------------------------------------------
+Iniciando Grid Search con 125 combinaciones posibles por modelo...
+Cota Superior iterando sobre alphas, betas y gammas de 0.1 a 0.9
+--------------------------------------------------
+Mejor resultado Modelo Aditivo (Aditivo - Aditivo):
+  MAPE:  1.168%
+  Alpha (nivel):      0.9
+  Beta (tendencia):   0.1
+  Gamma (estacional): 0.9
+--------------------------------------------------
+Mejor resultado Modelo Multiplicativo (Multiplicativo - Multiplicativo):
+  MAPE:  1.106%
+  Alpha (nivel):      0.1
+  Beta (tendencia):   0.1
+  Gamma (estacional): 0.5
+--------------------------------------------------
+=> El modelo con configuracion MULTIPLICATIVA y parametros manuales obtuvo el menor MAPE optimizado.
